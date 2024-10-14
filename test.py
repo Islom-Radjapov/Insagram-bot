@@ -1,30 +1,27 @@
-from password import *
-
-from instagrapi import Client
-cl = Client()
-cl.login(username, password)
-
-try:
-    # Get the post's media ID (primary key) from URL
-    media_id = cl.media_pk_from_url(url)
-    print(f"Retrieved Media ID: {media_id}")
-
-    # Fetch comments using the retrieved media ID
-    comments = cl.media_comments(media_id)
-    print(f"Comments for the post ID {media_id}:\n")
-    for comment in comments:
-        print(f"@{comment.user.username}: {comment.text}")
-except Exception as e:
-    print(f"An error occurred: {e}")
+import sqlite3
 
 
+def add_comment(table_name, text):
+    conn = sqlite3.connect("base")
+    # Create a cursor object
+    cursor = conn.cursor()
+    # Create table
+    cursor.execute(f'''CREATE TABLE IF NOT EXISTS {table_name}
+                 (text TEXT)''')
+    # Insert data
+    cursor.execute(f"INSERT INTO {table_name} (text) VALUES (?)", (text,))
+    # Commit the changes
+    conn.commit()
+    # Close the connection
+    conn.close()
 
-"""
-comments = cl.media_comments(post_id)
-for comment in comments:
-    print(comment, "Coment text => ", comment.text)
-"""
 
-
-# Log out when finished
-cl.logout()
+def get_comment(table):
+    conn = sqlite3.connect("base")
+    # Create a cursor object
+    cursor = conn.cursor()
+    # Query the data
+    rows = cursor.execute(f"SELECT text FROM {table}").fetchall()
+    # Close the connection
+    conn.close()
+    return rows

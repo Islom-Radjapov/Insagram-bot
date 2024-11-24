@@ -3,7 +3,7 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 import re
 
 # List of common ad keywords
-BANNED_KEYWORDS = ["buy", "discount", "free", "deal", "offer", "win", "prize", "limited"]
+#BANNED_KEYWORDS = ["buy", "discount", "free", "deal", "offer", "win", "prize", "limited"]
 
 # Dictionary to track user offenses
 user_offenses = {}
@@ -17,14 +17,23 @@ def contains_url(text):
     url_pattern = r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+|www\.[a-zA-Z0-9\-]+\.[a-zA-Z]{2,}"
     return re.search(url_pattern, text)
 
+def contains_text_link(mes):
+    typ = False
+    for entity in mes.entities:
+        typ = entity.type == "text_link"
+    return typ
+
 async def filter_ads(update: Update, context: ContextTypes.DEFAULT_TYPE):
     message = update.message
+
+
+
     text = message.text.lower()
     user_id = message.from_user.id
     chat_id = message.chat.id
 
     # Check if message contains links or banned keywords
-    if contains_url(text) or any(keyword in text for keyword in BANNED_KEYWORDS):
+    if contains_url(text) or contains_text_link(message): # or any(keyword in text for keyword in BANNED_KEYWORDS):
         # Delete the message containing ads or links
         await message.delete()
 
@@ -52,7 +61,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 def main():
     print("Working")
     # Replace 'YOUR_BOT_TOKEN' with your actual bot token
-    application = Application.builder().token("Your token").build()
+    application = Application.builder().token("7896001334:AAFq21moEI60YC3ZmO2d12i3p-Z_ofPoTSc").build()
 
     # Add command and message handler
     application.add_handler(CommandHandler("start", start))

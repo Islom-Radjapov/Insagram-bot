@@ -2,9 +2,9 @@ import sqlite3
 import time
 from instagrapi import Client
 
-post_id = "3488854135114788553"  # Replace with your target post's ID
-username = "b1llion.uz"
-password = "3333billion"
+post_id = ""  # Replace with your target post's ID
+username = ""
+password = ""
 
 def add_comment(text):
     conn = sqlite3.connect("base")

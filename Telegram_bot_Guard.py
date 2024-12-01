@@ -61,7 +61,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 def main():
     print("Working")
     # Replace 'YOUR_BOT_TOKEN' with your actual bot token
-    application = Application.builder().token("7896001334:AAFq21moEI60YC3ZmO2d12i3p-Z_ofPoTSc").build()
+    application = Application.builder().token("Your token").build()
 
     # Add command and message handler
     application.add_handler(CommandHandler("start", start))

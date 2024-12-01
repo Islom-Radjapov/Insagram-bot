@@ -14,8 +14,8 @@ driver.get("https://www.instagram.com/")
 time.sleep(3)
 
 # Input your credentials
-username = "afarmleniya_shar_wedding"
-password = "sora1234"
+username = ""
+password = ""
 
 username_input = driver.find_element(By.NAME, "username")
 password_input = driver.find_element(By.NAME, "password")
